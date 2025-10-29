@@ -7,7 +7,6 @@ on:
 jobs:
   style:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,17 +20,19 @@ jobs:
         run: go mod download
 
       - name: Check go fmt
+        shell: bash
         run: |
+          set -euo pipefail
           fmtdiff="$(gofmt -l .)"
-          if [ -n "$fmtdiff" ]; then
+          if [[ -n "$fmtdiff" ]]; then
             echo "The following files are not 'gofmt'-ed:"
             echo "$fmtdiff"
             exit 1
           fi
 
       - name: Install staticcheck
-        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+        run: go install 'honnef.co/go/tools/cmd/staticcheck@latest'
 
       - name: Run staticcheck
-        run: "$(go env GOPATH)"/bin/staticcheck ./...
+        run: $(go env GOPATH)/bin/staticcheck ./...
 
