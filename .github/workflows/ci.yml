@@ -1,23 +1,22 @@
-name: ci
+name: CI
 
 on:
+  push:
   pull_request:
-    branches: [main]
 
 jobs:
-  tests:
-    name: Tests
+  Tests:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: 'stable'   # this makes sure the latest Go version is used
+          go-version: 'stable'
 
-      - name: Print Go version
-        run: go version
+      - name: Run unit tests
+        run: go test ./...
+
 
