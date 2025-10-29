@@ -1,4 +1,4 @@
- name: ci
+name: ci
 
 on:
   pull_request:
@@ -16,7 +16,8 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.25.1"
+          go-version: 'stable'   # this makes sure the latest Go version is used
 
-      - name: Print Go Version
+      - name: Print Go version
         run: go version
+
