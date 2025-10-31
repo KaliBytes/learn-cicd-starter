@@ -1,0 +1,21 @@
+name: CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Make build script executable
+        run: chmod +x scripts/buildprod.sh
+      - name: Build (prod)
+        run: scripts/buildprod.sh
+
